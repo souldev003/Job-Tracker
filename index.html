@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Tracker</title>
+
+    <!-- Tailwind Css And Daisy UI Cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <style>
+        * {
+            font-family: "Geist", sans-serif;
+        }
+    </style>
+
+</head>
+
+<body class="bg-[#F8FAFC]">
+    <main>
+        <header class="container mx-auto">
+            <nav class="pt-16">
+                <h1 class="text-3xl text-[#002C5C] font-bold">Job Application Tracker</h1>
+                <div class="mt-5 grid grid-cols-3 gap-4">
+                    <div
+                        class="card bg-base-100 shadow-sm cursor-pointer transition-all duration-200 hover:shadow-md hover:-translate-y-1">
+                        <div class="card-body">
+                            <h2 class="text-[14px] text-[#323B49]">Total</h2>
+                            <p class="card-title">0</p>
+                        </div>
+                    </div>
+                    <div
+                        class="card bg-base-100 shadow-sm cursor-pointer transition-all duration-200 hover:shadow-md hover:-translate-y-1">
+                        <div class="card-body">
+                            <h2 class="text-[14px] text-[#323B49]">Interview</h2>
+                            <p class="card-title text-[#10B981]">0</p>
+                        </div>
+                    </div>
+                    <div
+                        class="card bg-base-100 shadow-sm cursor-pointer transition-all duration-200 hover:shadow-md hover:-translate-y-1">
+                        <div class="card-body">
+                            <h2 class="text-[14px] text-[#323B49]">Rejected</h2>
+                            <p class="card-title text-[#EF4444]">0</p>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <hr class="border-[#E6E7E9] my-8 container mx-auto">
+
+        <section class="container mx-auto">
+            <div>
+                <div class="textAndTitleSection">
+                    <div class="flex items-center justify-between">
+                        <h1 class="text-[#002C5C] text-[20px] font-semibold">Available Jobs</h1>
+                        <p class="text-[#64748B]"><span>0</span> Jobs</p>
+                    </div>
+
+                    <div class="mt-6">
+                        <button class="btn btn-soft btn-primary">Primary</button>
+                        <button class="btn btn-soft btn-primary">Primary</button>
+                        <button class="btn btn-soft btn-primary">Primary</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
