@@ -28,7 +28,24 @@ function jobStatusChecker(jobCard, targetIdName) {
         item.jobTittle === jobCard.jobTittle
       ),
   );
-  return interviewArray;
+
+  rejectedArray = rejectedArray.filter(
+    (item) =>
+      !(
+        item.companyName === jobCard.companyName &&
+        item.jobTittle === jobCard.jobTittle
+      ),
+  );
+
+  if (targetIdName === "Interview") {
+    interviewArray.push(jobCard);
+  }
+
+  if (targetIdName === "Rejected") {
+    rejectedArray.push(jobCard);
+  }
+
+  totalJobCount();
 }
 
 //to make active btn colorful using javaScript
@@ -62,6 +79,7 @@ totalJobCount();
 
 //Main Logic Here:
 mainDiv.addEventListener("click", function (event) {
+  //Interview Btn logic here:
   if (event.target.classList.contains("interview-selection-btn")) {
     const grandParentNode = event.target.parentNode.parentNode;
     const companyName =
@@ -84,7 +102,7 @@ mainDiv.addEventListener("click", function (event) {
 
     // console.log(jobCard);
 
-    console.log(jobStatusChecker(jobCard, "interview"));
+    jobStatusChecker(jobCard, "Interview");
 
     const statusBtn = grandParentNode.querySelector(".job-status-btn");
     statusBtn.innerText = "INTERVIEW CALLED";
@@ -92,6 +110,7 @@ mainDiv.addEventListener("click", function (event) {
     statusBtn.classList.add("btn-active", "btn-success");
   }
 
+  //Rejected Btn Logic here:
   if (event.target.classList.contains("reject-selection-btn")) {
     const grandParentNode = event.target.parentNode.parentNode;
     const companyName =
@@ -112,7 +131,7 @@ mainDiv.addEventListener("click", function (event) {
       jobDetails,
     };
 
-    console.log(jobStatusChecker(jobCard, "rejected"));
+    jobStatusChecker(jobCard, "Rejected");
 
     //Showing user job btn status:
     const statusBtn = grandParentNode.querySelector(".job-status-btn");
