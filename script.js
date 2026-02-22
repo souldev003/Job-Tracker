@@ -79,7 +79,32 @@ mainDiv.addEventListener("click", function (event) {
   }
 
   if (event.target.classList.contains("reject-selection-btn")) {
-    console.log("reject btn clicked");
+    const grandParentNode = event.target.parentNode.parentNode;
+    const companyName =
+      grandParentNode.querySelector(".company-name").innerText;
+    const jobTittle = grandParentNode.querySelector(".job-tittle").innerText;
+    const deleteBtn = grandParentNode.querySelector(".delete-icon");
+    const jobSalary = grandParentNode.querySelector(".job-salary").innerText;
+    const jobStatus =
+      grandParentNode.querySelector(".job-status-btn").innerText;
+    const jobDetails = grandParentNode.querySelector(".job-details").innerText;
+
+    const jobCard = {
+      companyName,
+      jobTittle,
+      deleteBtn,
+      jobSalary,
+      jobStatus,
+      jobDetails,
+    };
+
+    const checkRejectedJob = rejectedArray.find(
+      (item) =>
+        item.companyName === jobCard.companyName &&
+        item.jobTittle === jobCard.jobTittle,
+    );
+
+    console.log(!checkRejectedJob);
   }
 });
 
