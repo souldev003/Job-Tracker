@@ -20,6 +20,38 @@ const rejectedJob = document.getElementById("rejected-job");
 
 //Making logic:
 
+function createJobCard(jobCard) {
+  const div = document.createElement("div");
+  div.className =
+    "interview-card bg-white p-6 rounded-md space-y-4 cursor-pointer transition-all duration-150 hover:shadow-md hover:-translate-y-1";
+
+  div.innerHTML = `<div class="flex items-start justify-between align-middle">
+    <div class="heading">
+        <h1 class="company-name text-[#002C5C] text-lg font-semibold">${jobCard.companyName}</h1>
+        <h3 class="job-tittle text-[#64748B] text-base font-normal">${jobCard.jobTittle}</h3>
+    </div>
+    <i
+        class="delete-icon fa-solid fa-trash-can cursor-pointer transition-all duration-300 hover:scale-110"></i>
+</div>
+
+<div>
+    <p class="job-salary text-[#64748B] text-sm font-normal">${jobCard.jobSalary}</p>
+</div>
+
+<div class="job-status-btn btn uppercase text-[#002C5C] text-xs">
+    ${jobCard.jobStatus}
+</div>
+
+<p class="job-details text-[#323B49] font-normal text-sm">${jobCard.jobDetails}</p>
+
+<div class="flex items-center gap-4">
+    <button class="interview-selection-btn btn btn-outline btn-success">INTERVIEW</button>
+    <button class="reject-selection-btn btn btn-outline btn-error">REJECTED</button>
+</div>`;
+
+  return div;
+}
+
 function jobStatusChecker(jobCard, targetIdName) {
   interviewArray = interviewArray.filter(
     (item) =>
@@ -39,10 +71,16 @@ function jobStatusChecker(jobCard, targetIdName) {
 
   if (targetIdName === "Interview") {
     interviewArray.push(jobCard);
+
+    const newDiv = createJobCard(jobCard);
+    interviewSection.appendChild(newDiv);
   }
 
   if (targetIdName === "Rejected") {
     rejectedArray.push(jobCard);
+
+    const newDiv = createJobCard(jobCard);
+    rejectedSection.appendChild(newDiv);
   }
 
   totalJobCount();
