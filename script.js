@@ -64,20 +64,20 @@ function seeJob(id) {
   //target btn will be stay blue color
   document.getElementById(id).classList.add("stay-blue");
 
-  const selectedIdText = document.getElementById(id).innerText;
-
-  if (selectedIdText === "All") {
+  if (id === "all-btn") {
     jobListSection.classList.remove("hidden");
-  } else if (selectedIdText === "Interview") {
-    if ((interviewArray.length = 0)) {
+  } else if (id === "interview-btn") {
+    if (interviewArray.length === 0) {
       emptySection.classList.remove("hidden");
+    } else {
+      interviewSection.classList.remove("hidden");
     }
-    interviewSection.classList.remove("hidden");
-  } else if (selectedIdText === "Rejected") {
-    if ((rejectedArray.length = 0)) {
+  } else if (id === "reject-btn") {
+    if (rejectedArray.length === 0) {
       emptySection.classList.remove("hidden");
+    } else {
+      rejectedSection.classList.remove("hidden");
     }
-    rejectedSection.classList.remove("hidden");
   }
 }
 
