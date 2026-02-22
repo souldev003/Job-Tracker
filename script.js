@@ -55,13 +55,30 @@ function seeJob(id) {
   interviewBtn.classList.remove("stay-blue");
   rejectBtn.classList.remove("stay-blue");
 
-  //All three section will be hidden
-  // jobListSection.classList.add("hidden");
-  // filterSection.classList.add("hidden");
-  // emptySection.classList.add("hidden");
+  // All three section will be hidden
+  jobListSection.classList.add("hidden");
+  interviewSection.classList.add("hidden");
+  rejectedSection.classList.add("hidden");
+  emptySection.classList.add("hidden");
 
   //target btn will be stay blue color
   document.getElementById(id).classList.add("stay-blue");
+
+  const selectedIdText = document.getElementById(id).innerText;
+
+  if (selectedIdText === "All") {
+    jobListSection.classList.remove("hidden");
+  } else if (selectedIdText === "Interview") {
+    if ((interviewArray.length = 0)) {
+      emptySection.classList.remove("hidden");
+    }
+    interviewSection.classList.remove("hidden");
+  } else if (selectedIdText === "Rejected") {
+    if ((rejectedArray.length = 0)) {
+      emptySection.classList.remove("hidden");
+    }
+    rejectedSection.classList.remove("hidden");
+  }
 }
 
 //Calculating all job
