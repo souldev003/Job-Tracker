@@ -20,6 +20,17 @@ const rejectedJob = document.getElementById("rejected-job");
 
 //Making logic:
 
+function jobStatusChecker(jobCard, targetIdName) {
+  interviewArray = interviewArray.filter(
+    (item) =>
+      !(
+        item.companyName === jobCard.companyName &&
+        item.jobTittle === jobCard.jobTittle
+      ),
+  );
+  return interviewArray;
+}
+
 //to make active btn colorful using javaScript
 function seeJob(id) {
   //All three btn will be reset
@@ -35,6 +46,19 @@ function seeJob(id) {
   //target btn will be stay blue color
   document.getElementById(id).classList.add("stay-blue");
 }
+
+//Calculating all job
+function totalJobCount() {
+  document.getElementById("totalJob").innerText =
+    jobListSection.children.length;
+  document.getElementById("totalJobCount").innerText =
+    jobListSection.children.length;
+
+  interviewCount.innerText = interviewArray.length;
+  rejectedJob.innerText = rejectedArray.length;
+}
+
+totalJobCount();
 
 //Main Logic Here:
 mainDiv.addEventListener("click", function (event) {
@@ -60,22 +84,12 @@ mainDiv.addEventListener("click", function (event) {
 
     // console.log(jobCard);
 
-    const checkJobDeclared = interviewArray.find(
-      (item) =>
-        item.companyName === jobCard.companyName &&
-        item.jobTittle === jobCard.jobTittle,
-    );
+    console.log(jobStatusChecker(jobCard, "interview"));
 
-    grandParentNode.querySelector(".job-status-btn").innerText =
-      "Interview Called";
-    grandParentNode
-      .querySelector(".job-status-btn")
-      .classList.add("btn-success");
-
-    if (!checkJobDeclared) {
-      interviewArray.push(jobCard);
-      totalJobCount();
-    }
+    const statusBtn = grandParentNode.querySelector(".job-status-btn");
+    statusBtn.innerText = "INTERVIEW CALLED";
+    statusBtn.classList.remove("btn-active", "btn-success", "btn-error");
+    statusBtn.classList.add("btn-active", "btn-success");
   }
 
   if (event.target.classList.contains("reject-selection-btn")) {
@@ -98,25 +112,12 @@ mainDiv.addEventListener("click", function (event) {
       jobDetails,
     };
 
-    const checkRejectedJob = rejectedArray.find(
-      (item) =>
-        item.companyName === jobCard.companyName &&
-        item.jobTittle === jobCard.jobTittle,
-    );
+    console.log(jobStatusChecker(jobCard, "rejected"));
 
-    console.log(!checkRejectedJob);
+    //Showing user job btn status:
+    const statusBtn = grandParentNode.querySelector(".job-status-btn");
+    statusBtn.innerText = "REJECTED";
+    statusBtn.classList.remove("btn-active", "btn-success", "btn-error");
+    statusBtn.classList.add("btn-active", "btn-error");
   }
 });
-
-//Calculating all job
-function totalJobCount() {
-  document.getElementById("totalJob").innerText =
-    jobListSection.children.length;
-  document.getElementById("totalJobCount").innerText =
-    jobListSection.children.length;
-
-  interviewCount.innerText = interviewArray.length;
-  rejectedJob.innerText = rejectedArray.length;
-}
-
-totalJobCount();
