@@ -6,17 +6,17 @@
 
 ### 2. How do you create and insert a new element into the DOM?
 
-### Ans-2: we can create new element by calling createElement and put it into a variable then adding a class name or change itself innerHtml like that: const newDiv = document.createElement("div") ; newDiv.classList.add = ("box"); newDiv.innerHtml = ####<h1>Hello Programmer</h1>####. to append this: document.body.appendChild(newDiv);
+### Ans-2: we can create new element by calling createElement and put it into a variable then adding a class name or change itself innerHtml like that:
+
+const newDiv = document.createElement("div") ; newDiv.classList.add = ("box"); newDiv.innerHtml = <h1>Hello Programmer</h1>####. to append this: document.body.appendChild(newDiv);
 
 ### 3. What is Event Bubbling? And how does it work?
 
 ### Ans-3: Event Bubbling is like water wave first it will make event itself then it will do another event if their parents called for event. Like that
 
-### <div id="parent">
-
-### <button id="child">Click Me</button>
-
-### </div>
+<div id="parent">
+ <button id="child">Click Me</button>
+</div>
 
 ### document.getElementById("child").addEventListener("click", () => {
 
