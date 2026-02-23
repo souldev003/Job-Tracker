@@ -10,7 +10,7 @@ Ans-2: we can create new element by calling createElement and put it into a vari
 
 ### 3. What is Event Bubbling? And how does it work?
 
-### Ans-3: Event Bubbling is like water wave first it will make event itself then it will do another event if their parents called for event.
+Ans-3: Event Bubbling is like water wave first it will make event itself then it will do another event if their parents called for event.
 
 ### 4. What is Event Delegation in JavaScript? Why is it useful?
 
@@ -18,4 +18,4 @@ Ans-4: Event Delegation is to control many children by handling their parent.
 
 ### 5. What is the difference between preventDefault() and stopPropagation() methods?
 
-Ans-5:
+Ans-5: preventDefault() stops browser default ability and the other hand sopPropagation() stops event bubbling.
