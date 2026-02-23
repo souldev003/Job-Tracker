@@ -258,6 +258,27 @@ mainDiv.addEventListener("click", function (event) {
   }
 
   if (event.target.classList.contains("delete-icon")) {
-    console.log(event.target.closest(".interview-card"));
+    const grandParentNode = event.target.closest(".interview-card");
+    const companyName =
+      grandParentNode.querySelector(".company-name").innerText;
+    const jobTittle = grandParentNode.querySelector(".job-tittle").innerText;
+
+    grandParentNode.remove();
+
+    console.log(interviewArray, rejectedArray);
+
+    interviewArray = interviewArray.filter(
+      (item) =>
+        !(item.companyName === companyName && item.jobTittle === jobTittle),
+    );
+
+    rejectedArray = rejectedArray.filter(
+      (item) =>
+        !(item.companyName === companyName && item.jobTittle === jobTittle),
+    );
+
+    console.log(interviewArray, rejectedArray);
+
+    totalJobCount();
   }
 });
