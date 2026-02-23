@@ -78,7 +78,7 @@ function createJobCard(jobCard) {
     <button class="reject-selection-btn btn btn-outline btn-error">REJECTED</button>
 </div>`;
 
-  const statusBtn = document.querySelector(".job-status-btn");
+  const statusBtn = div.querySelector(".job-status-btn");
   if (jobCard.jobStatus === "INTERVIEW CALLED") {
     statusBtn.classList.remove("btn-active", "btn-success", "btn-error");
     statusBtn.classList.add("btn-active", "btn-success");
@@ -89,8 +89,67 @@ function createJobCard(jobCard) {
   return div;
 }
 
+// it will check interviewArray and rejectedArray;
+function filterArrayChecker(sectionChildren, jobCard) {
+  for (let i = 0; i < sectionChildren.length; i++) {
+    const card = sectionChildren[i];
+    const companyName = card.querySelector(".company-name").innerText;
+    const jobTittle = card.querySelector(".job-tittle").innerText;
+
+    if (
+      companyName === jobCard.companyName &&
+      jobTittle === jobCard.jobTittle
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function updateAllTabCard(jobCard) {
+  const allCards = jobListSection.children;
+  for (let card of allCards) {
+    const companyName = card.querySelector(".company-name").innerText;
+    const jobTittle = card.querySelector(".job-tittle").innerText;
+    if (
+      companyName === jobCard.companyName &&
+      jobTittle === jobCard.jobTittle
+    ) {
+      const statusBtn = card.querySelector(".job-status-btn");
+      checkJobStatus(statusBtn, jobCard.jobStatus);
+      break;
+    }
+  }
+}
+
 //It will Check what is the job name by user clicked btn and push data to interviewArray or rejectedArray by user clicked btn.
 function jobStatusChecker(jobCard, targetIdName) {
+  // To check duplicate interviewSection
+  for (let card of interviewSection.children) {
+    const companyName = card.querySelector(".company-name").innerText;
+    const jobTittle = card.querySelector(".job-tittle").innerText;
+    if (
+      companyName === jobCard.companyName &&
+      jobTittle === jobCard.jobTittle
+    ) {
+      card.remove();
+      break;
+    }
+  }
+
+  // To check duplicate rejectedSection
+  for (let card of rejectedSection.children) {
+    const companyName = card.querySelector(".company-name").innerText;
+    const jobTittle = card.querySelector(".job-tittle").innerText;
+    if (
+      companyName === jobCard.companyName &&
+      jobTittle === jobCard.jobTittle
+    ) {
+      card.remove();
+      break;
+    }
+  }
+
   interviewArray = interviewArray.filter(
     (item) =>
       !(
@@ -98,7 +157,6 @@ function jobStatusChecker(jobCard, targetIdName) {
         item.jobTittle === jobCard.jobTittle
       ),
   );
-
   rejectedArray = rejectedArray.filter(
     (item) =>
       !(
@@ -123,24 +181,8 @@ function jobStatusChecker(jobCard, targetIdName) {
     }
   }
 
+  updateAllTabCard(jobCard);
   totalJobCount();
-}
-
-// it will check interviewArray and rejectedArray;
-function filterArrayChecker(sectionChildren, jobCard) {
-  for (let i = 0; i < sectionChildren.length; i++) {
-    const card = sectionChildren[i];
-    const companyName = card.querySelector(".company-name").innerText;
-    const jobTittle = card.querySelector(".job-tittle").innerText;
-
-    if (
-      companyName === jobCard.companyName &&
-      jobTittle === jobCard.jobTittle
-    ) {
-      return true;
-    }
-  }
-  return false;
 }
 
 //Worker Function:
@@ -213,5 +255,9 @@ mainDiv.addEventListener("click", function (event) {
     };
 
     jobStatusChecker(jobCard, "Rejected");
+  }
+
+  if (event.target.classList.contains("delete-icon")) {
+    console.log(event.target.closest(".interview-card"));
   }
 });
