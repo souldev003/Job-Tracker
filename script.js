@@ -24,13 +24,22 @@ const rejectedJob = document.getElementById("rejected-job");
 // Helper Function:
 //Calculating all job
 function totalJobCount() {
-  document.getElementById("totalJob").innerText =
-    jobListSection.children.length;
-  document.getElementById("jobCount").innerText =
-    jobListSection.children.length;
-
   interviewCount.innerText = interviewArray.length;
   rejectedJob.innerText = rejectedArray.length;
+
+  let currentCount = 0;
+
+  if (!jobListSection.classList.contains("hidden")) {
+    currentCount = jobListSection.children.length;
+  } else if (!interviewSection.classList.contains("hidden")) {
+    currentCount = interviewSection.children.length;
+  } else if (!rejectedSection.classList.contains("hidden")) {
+    currentCount = rejectedSection.children.length;
+  }
+
+  document.getElementById("job-count").innerText = currentCount;
+  document.getElementById("totalJob").innerText =
+    jobListSection.children.length;
 }
 
 totalJobCount();
@@ -215,21 +224,28 @@ function seeJob(id) {
   //target btn will be stay blue color
   document.getElementById(id).classList.add("stay-blue");
 
+  let currentCount = 0;
+
   if (id === "all-btn") {
     jobListSection.classList.remove("hidden");
+    currentCount = jobListSection.children.length;
   } else if (id === "interview-btn") {
     if (interviewArray.length === 0) {
       emptySection.classList.remove("hidden");
     } else {
       interviewSection.classList.remove("hidden");
+      currentCount = interviewSection.children.length;
     }
   } else if (id === "reject-btn") {
     if (rejectedArray.length === 0) {
       emptySection.classList.remove("hidden");
     } else {
       rejectedSection.classList.remove("hidden");
+      currentCount = rejectedSection.children.length;
     }
   }
+
+  document.getElementById("job-count").innerText = currentCount;
 }
 
 //Main Logic Here:
@@ -250,6 +266,7 @@ mainDiv.addEventListener("click", function (event) {
     };
 
     jobStatusChecker(jobCard, "Interview");
+    totalJobCount();
 
     if (
       !jobListSection.classList.contains("hidden") &&
@@ -288,6 +305,7 @@ mainDiv.addEventListener("click", function (event) {
     };
 
     jobStatusChecker(jobCard, "Rejected");
+    totalJobCount();
 
     if (
       !jobListSection.classList.contains("hidden") &&
@@ -309,6 +327,9 @@ mainDiv.addEventListener("click", function (event) {
       emptySection.classList.remove("hidden");
     }
   }
+
+  const newDiv = document.createElement("div");
+  newDiv.className = "box";
 
   if (event.target.classList.contains("delete-icon")) {
     const grandParentNode = event.target.closest(".interview-card");
@@ -333,7 +354,14 @@ mainDiv.addEventListener("click", function (event) {
         !(item.companyName === companyName && item.jobTittle === jobTittle),
     );
 
+    const jobCard = {
+      companyName: companyName,
+      jobTittle: jobTittle,
+      jobStatus: "Not Applied",
+    };
+
     totalJobCount();
+    updateAllTabCard(jobCard);
 
     if (
       !jobListSection.classList.contains("hidden") &&
