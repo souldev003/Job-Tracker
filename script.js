@@ -32,7 +32,7 @@ function totalJobCount() {
   rejectedJob.innerText = rejectedArray.length;
 }
 
-totalJobCount;
+totalJobCount();
 //it will change the 'Not Applied' BTN when user clicked.
 function checkJobStatus(jobStatusBtn, status) {
   jobStatusBtn.classList.remove("btn-active", "btn-success", "btn-error");
@@ -78,6 +78,14 @@ function createJobCard(jobCard) {
     <button class="reject-selection-btn btn btn-outline btn-error">REJECTED</button>
 </div>`;
 
+  const statusBtn = document.querySelector(".job-status-btn");
+  if (jobCard.jobStatus === "INTERVIEW CALLED") {
+    statusBtn.classList.remove("btn-active", "btn-success", "btn-error");
+    statusBtn.classList.add("btn-active", "btn-success");
+  } else if (jobCard.jobStatus === "REJECTED") {
+    statusBtn.classList.remove("btn-active", "btn-success", "btn-error");
+    statusBtn.classList.add("btn-active", "btn-error");
+  }
   return div;
 }
 
