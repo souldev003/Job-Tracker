@@ -328,9 +328,6 @@ mainDiv.addEventListener("click", function (event) {
     }
   }
 
-  const newDiv = document.createElement("div");
-  newDiv.className = "box";
-
   if (event.target.classList.contains("delete-icon")) {
     const grandParentNode = event.target.closest(".interview-card");
     const companyName =
