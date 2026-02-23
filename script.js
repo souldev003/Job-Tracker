@@ -20,6 +20,33 @@ const rejectedJob = document.getElementById("rejected-job");
 
 //Making logic:
 
+// Helper Function:
+//Calculating all job
+function totalJobCount() {
+  document.getElementById("totalJob").innerText =
+    jobListSection.children.length;
+  document.getElementById("totalJobCount").innerText =
+    jobListSection.children.length;
+
+  interviewCount.innerText = interviewArray.length;
+  rejectedJob.innerText = rejectedArray.length;
+}
+//it will change the 'Not Applied' BTN when user clicked.
+function checkJobStatus(jobStatusBtn, status) {
+  jobStatusBtn.classList.remove("btn-active", "btn-success", "btn-error");
+
+  if (status === "INTERVIEW CALLED") {
+    jobStatusBtn.innerText = "INTERVIEW CALLED";
+    jobStatusBtn.classList.add("btn-active", "btn-success");
+  } else if (status === "REJECTED") {
+    jobStatusBtn.innerText = "REJECTED";
+    jobStatusBtn.classList.add("btn-active", "btn-error");
+  } else {
+    jobStatusBtn.innerText = "Not Applied";
+  }
+}
+
+// TO create new div call this function
 function createJobCard(jobCard) {
   const div = document.createElement("div");
   div.className =
@@ -52,6 +79,7 @@ function createJobCard(jobCard) {
   return div;
 }
 
+//It will Check what is the job name by user clicked btn and push data to interviewArray or rejectedArray by user clicked btn.
 function jobStatusChecker(jobCard, targetIdName) {
   interviewArray = interviewArray.filter(
     (item) =>
@@ -71,22 +99,17 @@ function jobStatusChecker(jobCard, targetIdName) {
 
   if (targetIdName === "Interview") {
     interviewArray.push(jobCard);
-
-    const newDiv = createJobCard(jobCard);
-    interviewSection.appendChild(newDiv);
   }
 
   if (targetIdName === "Rejected") {
     rejectedArray.push(jobCard);
-
-    const newDiv = createJobCard(jobCard);
-    rejectedSection.appendChild(newDiv);
   }
 
   totalJobCount();
 }
 
-//to make active btn colorful using javaScript
+//Worker Function:
+//to make active and colorful btn and to show up selected Section:
 function seeJob(id) {
   //All three btn will be reset
   allBtn.classList.remove("stay-blue");
@@ -119,28 +142,16 @@ function seeJob(id) {
   }
 }
 
-//Calculating all job
-function totalJobCount() {
-  document.getElementById("totalJob").innerText =
-    jobListSection.children.length;
-  document.getElementById("totalJobCount").innerText =
-    jobListSection.children.length;
-
-  interviewCount.innerText = interviewArray.length;
-  rejectedJob.innerText = rejectedArray.length;
-}
-
-totalJobCount();
-
 //Main Logic Here:
 mainDiv.addEventListener("click", function (event) {
   //Interview Btn logic here:
   if (event.target.classList.contains("interview-selection-btn")) {
     const grandParentNode = event.target.parentNode.parentNode;
+    const jobStatusBtn = grandParentNode.querySelector(".job-status-btn");
+
     const companyName =
       grandParentNode.querySelector(".company-name").innerText;
     const jobTittle = grandParentNode.querySelector(".job-tittle").innerText;
-    const deleteBtn = grandParentNode.querySelector(".delete-icon");
     const jobSalary = grandParentNode.querySelector(".job-salary").innerText;
     const jobStatus =
       grandParentNode.querySelector(".job-status-btn").innerText;
@@ -149,7 +160,6 @@ mainDiv.addEventListener("click", function (event) {
     const jobCard = {
       companyName,
       jobTittle,
-      deleteBtn,
       jobSalary,
       jobStatus,
       jobDetails,
@@ -159,19 +169,16 @@ mainDiv.addEventListener("click", function (event) {
 
     jobStatusChecker(jobCard, "Interview");
 
-    const statusBtn = grandParentNode.querySelector(".job-status-btn");
-    statusBtn.innerText = "INTERVIEW CALLED";
-    statusBtn.classList.remove("btn-active", "btn-success", "btn-error");
-    statusBtn.classList.add("btn-active", "btn-success");
+    checkJobStatus(jobStatusBtn, "INTERVIEW CALLED");
   }
 
   //Rejected Btn Logic here:
   if (event.target.classList.contains("reject-selection-btn")) {
     const grandParentNode = event.target.parentNode.parentNode;
+    const jobStatusBtn = grandParentNode.querySelector(".job-status-btn");
     const companyName =
       grandParentNode.querySelector(".company-name").innerText;
     const jobTittle = grandParentNode.querySelector(".job-tittle").innerText;
-    const deleteBtn = grandParentNode.querySelector(".delete-icon");
     const jobSalary = grandParentNode.querySelector(".job-salary").innerText;
     const jobStatus =
       grandParentNode.querySelector(".job-status-btn").innerText;
@@ -180,7 +187,6 @@ mainDiv.addEventListener("click", function (event) {
     const jobCard = {
       companyName,
       jobTittle,
-      deleteBtn,
       jobSalary,
       jobStatus,
       jobDetails,
@@ -189,9 +195,6 @@ mainDiv.addEventListener("click", function (event) {
     jobStatusChecker(jobCard, "Rejected");
 
     //Showing user job btn status:
-    const statusBtn = grandParentNode.querySelector(".job-status-btn");
-    statusBtn.innerText = "REJECTED";
-    statusBtn.classList.remove("btn-active", "btn-success", "btn-error");
-    statusBtn.classList.add("btn-active", "btn-error");
+    checkJobStatus(jobStatusBtn, "REJECTED");
   }
 });
