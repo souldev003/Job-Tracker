@@ -31,6 +31,8 @@ function totalJobCount() {
   interviewCount.innerText = interviewArray.length;
   rejectedJob.innerText = rejectedArray.length;
 }
+
+totalJobCount;
 //it will change the 'Not Applied' BTN when user clicked.
 function checkJobStatus(jobStatusBtn, status) {
   jobStatusBtn.classList.remove("btn-active", "btn-success", "btn-error");
@@ -99,13 +101,38 @@ function jobStatusChecker(jobCard, targetIdName) {
 
   if (targetIdName === "Interview") {
     interviewArray.push(jobCard);
+    if (!filterArrayChecker(interviewSection.children, jobCard)) {
+      const newCard = createJobCard(jobCard);
+      interviewSection.appendChild(newCard);
+    }
   }
 
   if (targetIdName === "Rejected") {
     rejectedArray.push(jobCard);
+    if (!filterArrayChecker(rejectedSection.children, jobCard)) {
+      const newCard = createJobCard(jobCard);
+      rejectedSection.appendChild(newCard);
+    }
   }
 
   totalJobCount();
+}
+
+// it will check interviewArray and rejectedArray;
+function filterArrayChecker(sectionChildren, jobCard) {
+  for (let i = 0; i < sectionChildren.length; i++) {
+    const card = sectionChildren[i];
+    const companyName = card.querySelector(".company-name").innerText;
+    const jobTittle = card.querySelector(".job-tittle").innerText;
+
+    if (
+      companyName === jobCard.companyName &&
+      jobTittle === jobCard.jobTittle
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 //Worker Function:
@@ -146,55 +173,37 @@ function seeJob(id) {
 mainDiv.addEventListener("click", function (event) {
   //Interview Btn logic here:
   if (event.target.classList.contains("interview-selection-btn")) {
-    const grandParentNode = event.target.parentNode.parentNode;
-    const jobStatusBtn = grandParentNode.querySelector(".job-status-btn");
+    const grandParentNode = event.target.closest(".interview-card");
 
-    const companyName =
-      grandParentNode.querySelector(".company-name").innerText;
-    const jobTittle = grandParentNode.querySelector(".job-tittle").innerText;
-    const jobSalary = grandParentNode.querySelector(".job-salary").innerText;
-    const jobStatus =
-      grandParentNode.querySelector(".job-status-btn").innerText;
-    const jobDetails = grandParentNode.querySelector(".job-details").innerText;
+    const jobStatusBtn = grandParentNode.querySelector(".job-status-btn");
+    checkJobStatus(jobStatusBtn, "INTERVIEW CALLED");
 
     const jobCard = {
-      companyName,
-      jobTittle,
-      jobSalary,
-      jobStatus,
-      jobDetails,
+      companyName: grandParentNode.querySelector(".company-name").innerText,
+      jobTittle: grandParentNode.querySelector(".job-tittle").innerText,
+      jobSalary: grandParentNode.querySelector(".job-salary").innerText,
+      jobStatus: grandParentNode.querySelector(".job-status-btn").innerText,
+      jobDetails: grandParentNode.querySelector(".job-details").innerText,
     };
 
-    // console.log(jobCard);
-
     jobStatusChecker(jobCard, "Interview");
-
-    checkJobStatus(jobStatusBtn, "INTERVIEW CALLED");
   }
 
   //Rejected Btn Logic here:
   if (event.target.classList.contains("reject-selection-btn")) {
-    const grandParentNode = event.target.parentNode.parentNode;
+    const grandParentNode = event.target.closest(".interview-card");
+
     const jobStatusBtn = grandParentNode.querySelector(".job-status-btn");
-    const companyName =
-      grandParentNode.querySelector(".company-name").innerText;
-    const jobTittle = grandParentNode.querySelector(".job-tittle").innerText;
-    const jobSalary = grandParentNode.querySelector(".job-salary").innerText;
-    const jobStatus =
-      grandParentNode.querySelector(".job-status-btn").innerText;
-    const jobDetails = grandParentNode.querySelector(".job-details").innerText;
+    checkJobStatus(jobStatusBtn, "REJECTED");
 
     const jobCard = {
-      companyName,
-      jobTittle,
-      jobSalary,
-      jobStatus,
-      jobDetails,
+      companyName: grandParentNode.querySelector(".company-name").innerText,
+      jobTittle: grandParentNode.querySelector(".job-tittle").innerText,
+      jobSalary: grandParentNode.querySelector(".job-salary").innerText,
+      jobStatus: grandParentNode.querySelector(".job-status-btn").innerText,
+      jobDetails: grandParentNode.querySelector(".job-details").innerText,
     };
 
     jobStatusChecker(jobCard, "Rejected");
-
-    //Showing user job btn status:
-    checkJobStatus(jobStatusBtn, "REJECTED");
   }
 });
