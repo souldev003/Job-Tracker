@@ -227,8 +227,12 @@ function seeJob(id) {
   let currentCount = 0;
 
   if (id === "all-btn") {
-    jobListSection.classList.remove("hidden");
-    currentCount = jobListSection.children.length;
+    if (jobListSection.children.length === 0) {
+      emptySection.classList.remove("hidden");
+    } else {
+      jobListSection.classList.remove("hidden");
+      currentCount = jobListSection.children.length;
+    }
   } else if (id === "interview-btn") {
     if (interviewArray.length === 0) {
       emptySection.classList.remove("hidden");
@@ -246,6 +250,27 @@ function seeJob(id) {
   }
 
   document.getElementById("job-count").innerText = currentCount;
+}
+
+function updateEmptyState() {
+  const isAllVisible = !jobListSection.classList.contains("hidden");
+  const isInterviewVisible = !interviewSection.classList.contains("hidden");
+  const isRejectedVisible = !rejectedSection.classList.contains("hidden");
+
+  if (isAllVisible && jobListSection.children.length === 0) {
+    jobListSection.classList.add("hidden");
+    emptySection.classList.remove("hidden");
+  }
+
+  if (isInterviewVisible && interviewSection.children.length === 0) {
+    interviewSection.classList.add("hidden");
+    emptySection.classList.remove("hidden");
+  }
+
+  if (isRejectedVisible && rejectedSection.children.length === 0) {
+    rejectedSection.classList.add("hidden");
+    emptySection.classList.remove("hidden");
+  }
 }
 
 //Main Logic Here:
@@ -360,24 +385,6 @@ mainDiv.addEventListener("click", function (event) {
     totalJobCount();
     updateAllTabCard(jobCard);
 
-    if (
-      !jobListSection.classList.contains("hidden") &&
-      jobListSection.children.length === 0
-    ) {
-      jobListSection.classList.add("hidden");
-      emptySection.classList.remove("hidden");
-    } else if (
-      !interviewSection.classList.contains("hidden") &&
-      interviewSection.children.length === 0
-    ) {
-      interviewSection.classList.add("hidden");
-      emptySection.classList.remove("hidden");
-    } else if (
-      !rejectedSection.classList.contains("hidden") &&
-      rejectedSection.children.length === 0
-    ) {
-      rejectedSection.classList.add("hidden");
-      emptySection.classList.remove("hidden");
-    }
+    updateEmptyState();
   }
 });
